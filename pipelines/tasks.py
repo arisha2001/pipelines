@@ -54,26 +54,21 @@ class LoadFile(BaseTask):
         return f'{self.input_file} -> {self.table}'
 
     def run(self):
-        filename = f"{self.input_file}"
-        input_file = open(filename, "r")
+        input_file = open(f"{self.input_file}", "r")
         columns = input_file.readline().strip().split(",")
+
         create_query = f"DROP TABLE IF EXISTS {self.table}; \n"
         create_query += f"CREATE TABLE {self.table} ( "
         for column in columns:
             create_query += column + " VARCHAR, \n "
         create_query = create_query[:-4]
         create_query += ");"
-
         self.cursor.execute(create_query)
-
         self.conn.commit()
         print(f"........Table '{self.table}' has been created successfully........")
 
-        with open(self.input_file, 'r') as f:
-            reader = csv.reader(f)
-            next(reader)
-            for row in reader:
-                self.cursor.execute(f"INSERT INTO {self.table}(id, name, url) VALUES (%s, %s, %s)", row)
+        self.cursor.copy_from(input_file, f'{self.table}', sep=',')
+        input_file.close()
         self.conn.commit()
         print("...............Data has been added successfully...............\n")
 
@@ -81,7 +76,7 @@ class LoadFile(BaseTask):
         self.cursor.execute(f"SELECT * FROM {self.table}")
         records = self.cursor.fetchall()
         for row in records:
-            print("Id = ", row[0], )
+            print("Id = ", row[0])
             print("Name = ", row[1])
             print("Url  = ", row[2], "\n")
 
