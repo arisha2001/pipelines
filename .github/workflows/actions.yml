@@ -10,6 +10,6 @@ jobs:
       - name: Check running containers
         run: docker ps -a
       - name: Logs app
-        run: docker-compose logs postgres
+        run: docker-compose logs postgresql
       - name: Logs app
         run: docker logs pipelines_app_1
