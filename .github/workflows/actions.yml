@@ -5,13 +5,23 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      image: postgres:latest
+      env:
+        - POSTGRES_USER: arina
+        - POSTGRES_PASSWORD: arina
+        - POSTGRES_BD: postgres
+      ports:
+        - 5432:5432
+      options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
       - uses: actions/checkout@v2
       - name: Build the stack
         run: docker-compose up -d
       - name: Check running containers
         run: docker ps -a
-      - name: Logs app
+      - name: Logs postgresql
         run: docker-compose logs postgresql
       - name: Logs app
         run: docker logs pipelines_app_1
