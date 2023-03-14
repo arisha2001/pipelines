@@ -1,13 +1,13 @@
-name: DockerComposeOnPush
-on:
-  push:
-    branches:
-      - main
+name: Actions
+on: push
 jobs:
-  build_run:
-    runs-on: macos-latest
+  test:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: isbang/compose-action@v1.4.1
-        with:
-          compose-file: "./docker-compose.yml"
+      - name: Build the stack
+        run: docker-compose up -d
+      - name: Check running containers
+        run: docker ps -a
+      - name: Logs
+        run: docker logs app-1
