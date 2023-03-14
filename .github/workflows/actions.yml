@@ -1,4 +1,4 @@
-name: Actions
+name: DockerComposeOnPush
 on:
   push:
     branches:
@@ -8,7 +8,8 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run Postgres and App containers
-        run: docker compose up
-      - name: Output
-        run: docker compose logs pipelines -t -f
+      - name: Build the Docker image
+        run: docker compose build
+
+      - name: up postgres and app container runs
+        run: docker compose up -d
