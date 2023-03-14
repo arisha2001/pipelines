@@ -1,0 +1,14 @@
+name: Actions
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build_run:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Postgres and App containers
+        run: docker compose up
+      - name: Output
+        run: docker compose logs pipelines -t -f
