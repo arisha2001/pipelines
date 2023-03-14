@@ -10,4 +10,4 @@ jobs:
       - name: Check running containers
         run: docker ps -a
       - name: Logs
-        run: docker logs app-1
+        run: docker logs app
