@@ -1,0 +1,17 @@
+name: workflow
+
+on:
+  push:
+    branches: [ "main" ]
+
+
+jobs:
+
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker compose up
