@@ -1,15 +1,17 @@
-name: DockerComposeOnPush
-on:
-  push:
-    branches:
-      - main
+name: Actions
+
+on: push
+
 jobs:
-  build_run:
-    runs-on: macos-latest
+  test:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build the Docker image
-        run: docker compose build
-
-      - name: up postgres and app container runs
-        run: docker compose up -d
+      - name: Build the stack
+        run: docker-compose up -d
+      - name: Check running containers
+        run: docker ps -a
+      - name: Logs app
+        run: docker-compose logs postgresql
+      - name: Logs app
+        run: docker logs pipelines_app_1
