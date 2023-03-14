@@ -9,5 +9,7 @@ jobs:
         run: docker-compose up -d
       - name: Check running containers
         run: docker ps -a
-      - name: Logs
+      - name: Logs app
+        run: docker-compose logs postgres
+      - name: Logs app
         run: docker logs pipelines_app_1
