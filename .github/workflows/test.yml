@@ -1,9 +1,9 @@
-name: Actions
+name: testing
 
 on: push
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -11,7 +11,7 @@ jobs:
         run: docker-compose up -d
       - name: Check running containers
         run: docker ps -a
-      - name: Logs app
+      - name: Logs postgresql
         run: docker-compose logs postgresql
       - name: Logs app
         run: docker logs pipelines_app_1
