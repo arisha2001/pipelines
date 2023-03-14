@@ -8,8 +8,6 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build the Docker image
-        run: docker compose build
-
-      - name: up postgres and app container runs
-        run: docker compose up -d
+      - uses: isbang/compose-action@v1.4.1
+        with:
+          compose-file: "./docker-compose.yml"
